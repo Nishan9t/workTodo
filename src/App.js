@@ -56,7 +56,7 @@ const deleteTodoFromFirebase=async(todo)=>{
             
               await deleteDoc(todoRef).then(()=>
               {
-                console.log("todo deleted");
+                toast.success("Todo Deleted")
                 getTodosFromFirebase();
               })
             
@@ -75,7 +75,13 @@ async function updateDoneToFirebase(todo){
     getTodosFromFirebase().then(()=>{toast.success("Todo Completed")})
   }
 
-
+ async function updateDataToFirebase(newtodo){
+  console.log(newtodo.id)
+  await updateDoc(doc(db,"todos",newtodo.id),newtodo)
+  console.log(newtodo)
+  getTodosFromFirebase().then(()=>{toast.success("Updated")})
+ }
+  
 
 
 
@@ -85,7 +91,7 @@ async function updateDoneToFirebase(todo){
     <div>
        <Toaster />
       <Header setIsOpen={setIsOpen} isOpen={isOpen}/>
-      <ToDoList todoArray={todoArray} deleteTodoFromFirebase={deleteTodoFromFirebase} updateDoneToFirebase={updateDoneToFirebase}/>
+      <ToDoList todoArray={todoArray} deleteTodoFromFirebase={deleteTodoFromFirebase} updateDoneToFirebase={updateDoneToFirebase} updateDataToFirebase={updateDataToFirebase}/>
       <NewTodoForm isOpen={isOpen} setIsOpen={setIsOpen}  todoArray={todoArray} addTodoToFirebase={addTodoToFirebase}  />
       
     </div>
